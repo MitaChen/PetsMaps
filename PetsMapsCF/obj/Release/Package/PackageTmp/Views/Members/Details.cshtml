@@ -1,0 +1,49 @@
+﻿@model PetsMapsCF.Models.Members
+
+@{
+    ViewBag.Title = "";
+}
+
+<div class="card">
+    <div class="card-header btn-primary text-white">
+        <h3 class="p-2">@Html.DisplayFor(model => model.MemberName)　@Html.DisplayFor(model => model.MemberGender)</h3>
+        <h6 class="text-right">
+            @Html.DisplayNameFor(model => model.MemberID)：
+            @Html.DisplayFor(model => model.MemberID)
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <h6>
+                    @Html.DisplayNameFor(model => model.MemberAccount)：
+                    @Html.DisplayFor(model => model.MemberAccount)
+                </h6>
+                <h6>
+                    @Html.DisplayNameFor(model => model.MemberBirthday)：
+                    @Html.DisplayFor(model => model.MemberBirthday)
+                </h6>
+                <h6>
+                    @Html.DisplayNameFor(model => model.MemberMobile)：
+                    @Html.DisplayFor(model => model.MemberMobile)
+                </h6>
+                <h6>
+                    @Html.DisplayNameFor(model => model.MemberAddress)：
+                    @Html.DisplayFor(model => model.MemberAddress)
+                </h6>
+                <h6>
+                    @Html.DisplayNameFor(model => model.CreateDate)：
+                    @Html.DisplayFor(model => model.CreateDate)
+                </h6>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-right mr-1 mt-3 mb-2">
+    @Html.ActionLink("編輯", "Edit", new { id = Model.MemberID }, new { @class = "btn btn-primary btn-sm" })
+    @Html.ActionLink("刪除", "Delete", new { id = Model.MemberID }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('確定要刪除嗎?')" })
+</div>

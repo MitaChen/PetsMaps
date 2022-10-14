@@ -1,0 +1,46 @@
+﻿@model PetsMapsCF.Models.Maps
+
+@{
+    Layout = "";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        @{
+            var photo = Model.MapImg == null ? "dog3.png" : Model.MapImg;
+        }
+
+        @if (Model.MapImg == null)
+        {
+            <img src="~/Photos/dog3.png" class="img-thumbnail" />
+        }
+        else
+        {
+            <img src="~/MapPhotos/@photo" class="img-thumbnail" />
+        }
+
+    </div>
+
+    <div class="col-md-12">
+        <h4 class="mt-4">
+            <i class="bi bi-map"></i> @Html.DisplayFor(model => model.MapCity)@Html.DisplayFor(model => model.MapDistrict) @Html.DisplayFor(model => model.MapAddress)
+        </h4>
+        <h5>
+           <i class="bi bi-telephone-fill"></i> @Html.DisplayFor(model => model.MapTel)
+        </h5>
+        <h5 class="mt-4">
+            <i class="bi bi-quote"></i>
+            @*@Html.DisplayFor(model => model.MapInfo)*@
+            @if (@Model.MapInfo != null) {
+            @Html.Raw(Model.MapInfo.ToString().Replace("\n","<br/>"))
+        }
+        </h5>
+    </div>
+
+</div>
+
+@*<div class="card-footer text-right">
+    @Html.ActionLink("編輯", "Edit", new { id = Model.MapID }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("刪除", "Delete", new { id = Model.MapID }, new { @class = "btn btn-danger" })
+</div>*@

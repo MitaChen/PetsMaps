@@ -1,0 +1,95 @@
+﻿@model PetsMapsCF.Models.Maps
+
+@{
+    ViewBag.Title = "編輯地圖資料";
+    Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+}
+
+<h3 class="managertitle align-content-center">
+    <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　編輯地圖資料
+</h3>
+
+@using (Html.BeginForm("Edit", "Maps",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="container p-5 createform">
+        <div class="form">
+
+            @Html.HiddenFor(model => model.MapID)
+            @Html.HiddenFor(model => model.MapImg)
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        @Html.LabelFor(model => model.MapName, htmlAttributes: new { @class = "control-label " })
+                        @Html.EditorFor(model => model.MapName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MapName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-4">
+                        @Html.LabelFor(model => model.MapTel, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MapTel, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MapTel, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="w-100"></div>
+                    <div class="col-4 mt-2">
+                        @Html.LabelFor(model => model.MapCity, htmlAttributes: new { @class = "control-label " })
+                        @Html.EditorFor(model => model.MapCity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MapCity, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-4 mt-2">
+                        @Html.LabelFor(model => model.MapDistrict, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MapDistrict, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MapDistrict, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="w-100"></div>
+
+                    <div class="col-8 mt-2">
+                        @Html.LabelFor(model => model.MapAddress, htmlAttributes: new { @class = "control-label " })
+                        @Html.EditorFor(model => model.MapAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MapAddress, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="w-100"></div>
+
+                    <div class="col-8 mt-2">
+                        @Html.LabelFor(model => model.MapInfo, htmlAttributes: new { @class = "control-label " })
+                        @Html.TextAreaFor(model => model.MapInfo, new { @class = "form-control" , rows = "10" })
+                        @*@if (@Model.MapInfo != null)
+                        {
+                            @Html.Raw(Model.MapInfo.ToString().Replace("\n", "<br/>"))
+                        }*@
+                        @Html.ValidationMessageFor(model => model.MapInfo, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="w-100"></div>
+
+                    <div class="col-8 mt-2">
+                        @Html.LabelFor(model => model.MapImg, htmlAttributes: new { @class = "control-label" })
+                        @*<p>
+                        原有照片：<img src="@Url.Action("GetImage", new {id=Model.MapID})" width="200" />
+                        新照片預覽：<img width="200" id="newPhoto" />
+                    </p>*@
+                        <input id="photo" name="photo" type="file" class="form-control" />
+                        <span class="field-validation-valid text-danger">@ViewBag.ErrMessage</span>
+                    </div>
+
+                    <div class="w-100"></div>
+
+                    <div class="col-8 form-group justify-content-center mt-4">
+                        <input type="submit" value="修改" class="btn btn-primary" />
+                        @Html.ActionLink("返回地圖資料列表", "Index", new { }, new { @class = "btn btn-primary" })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+@*<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@

@@ -1,0 +1,42 @@
+﻿@model PetsMapsCF.Models.Administrators
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>管理員列表</h2>
+
+<div>
+    <h4>Administrators</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminPassword)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminPassword)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminPermission)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminPermission)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AdminID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

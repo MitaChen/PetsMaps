@@ -1,0 +1,41 @@
+﻿@model PetsMapsCF.Models.Products
+
+@{
+    ViewBag.Title = "";
+}
+
+
+    <div class="col-md-12">
+        <div class="col-md-12">
+
+            @{
+                var photo = Model.ProductImg == null ? "dog3.png" : Model.ProductImg;
+            }
+
+            @if (Model.ProductImg == null)
+            {
+                <img src="~/Photos/dog3.png" class="img-thumbnail" />
+            }
+            else
+            {
+                <img src="~/ProductPhotos/@photo" class="img-thumbnail" />
+            }
+
+        </div>
+
+        <div class="col-md-12 mt-2 mb-2">
+            <h3>
+                <strong>
+                    <i class="bi bi-quote"></i> @Html.DisplayFor(model => model.ProductName)
+                </strong>
+            </h3>
+            <h5 class="mb-5">
+                NT$@Html.DisplayFor(model => model.UnitPrice)
+            </h5>
+        </div>
+    </div>
+
+    @*<div class="card-footer text-right">
+        @Html.ActionLink("編輯", "Edit", new { id = Model.ProductID }, new { @class = "btn btn-primary btn" })
+        @Html.ActionLink("刪除", "Delete", new { id = Model.ProductID }, new { @class = "btn btn-danger btn" })
+    </div>*@

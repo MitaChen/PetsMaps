@@ -1,0 +1,86 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@*@model IEnumerable<PetsMapsCF.Models.Maps>*@
+@model IPagedList<PetsMapsCF.Models.Maps>
+
+@{
+    ViewBag.Title = "地圖搜尋";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //var depId = Request.QueryString["depId"];
+    //var selected = "";
+}
+
+<h3 class="managertitle align-content-center"><img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　高雄寵物地圖 </h3>
+
+<div class="search d-flex">
+    <form class="d-flex" action="/Home/MapList" method="post">
+        <i style="font-size:1.6rem;" class="bi bi-search ml-3"></i>
+        <input class="form-control mr-2 ml-3 col-8 " id="searchCity" type="text" placeholder="請輸入區域搜尋" name="name" />
+        <input class="btn btn-primary ml-1" id="Submit1" type="submit" value="查詢" />
+    </form>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row row-cols-2 row-cols-md-3 row-cols-xl-3">
+            @foreach (var item in Model)
+            {
+                <div class="card align-content-center bg-light">
+                    <div class="bg-light border-bottom-0" style="overflow: hidden;">
+                        <img src="~/MapPhotos/@item.MapImg" class="card-img-top" width="400" height="250" />
+                    </div>
+                    <div class="card-body">
+                        <h3><strong>@Html.DisplayFor(modelItem => item.MapName)</strong></h3>
+                        <h5>
+                            <i class="bi bi-heptagon"></i>
+                            @Html.DisplayFor(modelItem => item.MapCity) @Html.DisplayFor(modelItem => item.MapDistrict)
+                        </h5>
+                        <h5>@Html.DisplayFor(modelItem => item.MapAddress)</h5>
+                        <h6><i class="bi bi-telephone-fill"></i> @Html.DisplayFor(modelItem => item.MapTel)</h6>
+                        <h6>
+                            <button type="button" title="@item.MapID" value="@item.MapName" class="btn btn-danger btn-sm btnDetail" data-toggle="modal" data-target="#exampleModal">
+                                <i class="bi bi-info-circle-fill"></i> 詳細
+                            </button>
+                            <a href="https://www.google.com.tw/maps/search/@item.MapName" target="_blank" class="btn btn-info btn-sm"><i class="bi bi-google"></i> 地圖</a>
+
+                        </h6>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- 頁籤 -->
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(Model, page => Url.Action("MapList", new { page }))
+</div>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <h2 class="modal-title text-center mt-4 mb-2 font-weight-bold" id="exampleModalLabel"></h2>
+            <div class="modal-body text-center">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $('.btnDetail').click(function (evt) {
+            //console.log("/Members/Details/" + evt.target.title);
+            $('#exampleModal .modal-body').load("/Maps/Details/" + evt.target.title);
+            $('#exampleModalLabel').empty();
+            $('#exampleModalLabel').append(evt.target.value);
+        });
+
+    </script>
+}

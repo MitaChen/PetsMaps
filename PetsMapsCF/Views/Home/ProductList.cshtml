@@ -1,0 +1,139 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<PetsMapsCF.Models.Products>
+
+@{
+    ViewBag.Title = "團購商品";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="managertitle align-content-center">
+    <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　九月團購商品 9/30收單
+</h3>
+<div class="search d-flex">
+    <form class="d-flex" action="/Home/ProductList" method="post">
+        <i style="font-size:1.6rem;" class="bi bi-search ml-3"></i>
+        <input class="form-control mr-2 ml-3 col-8" type="text" placeholder="請輸入關鍵字搜尋商品" name="productsname" />
+        <input class="btn btn-primary ml-1" id="Submit1" type="submit" value="查詢" />
+    </form>
+</div>
+
+<a href="/Home/MyCart">
+    <span style="position: fixed; right: 30px; bottom: 30px; border-radius: 100%; width: 90px; height: 90px; display: flex; /* 水平置中 */ justify-content: center; align-content: center; flex-wrap: wrap; " class="btn-info text-white">
+        <i style="font-size:2.5rem;" class="bi bi-cart4"></i><span class="cartQQ badge bg-warning text-white ms-1 rounded-pill" style="height:20px;"></span>
+    </span>
+</a>
+
+<section class="py-5">
+    <div class="container ">
+        <div class="row row-cols-md-2">
+            @foreach (var item in Model)
+            {
+                <div class="card align-content-center bg-light">
+                    <div class="bg-light border-bottom-0 box" style="overflow: hidden;">
+                        <img src="~/ProductPhotos/@item.ProductImg" class="card-img-top" height="400" />
+                    </div>
+                    <div class="card-body">
+                        <input class="PID" type="hidden" value="@item.ProductID" />
+                        <h4 class="text-center">
+                            <i class="bi bi-quote"></i>
+                            <strong class="PName">@Html.DisplayFor(modelItem => item.ProductName)</strong>
+                            <button type="button" title="@item.ProductID" class=" btn btnDetail" data-toggle="modal" data-target="#exampleModal">
+                                <i class="bi bi-box-arrow-up-right"></i>
+                            </button>
+                        </h4>
+                        <h6 class="text-secondary text-center" style="text-decoration:line-through">NT$@(item.UnitPrice*1.5)</h6>
+                        <h5 class="text-danger text-center">
+                            <strong>團購價 NT$<span class="Price" title="@item.UnitPrice">@Html.DisplayFor(modelItem => item.UnitPrice)</span></strong>
+                        </h5>
+                    </div>
+                    <div class="card-footer bg-light border-top-0 mb-2">
+
+                        <button class="addCart btn btn-info btn-lg btn-block"><i class="bi bi-cart-plus"></i></button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- 頁籤 -->
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }))
+</div>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-center border-bottom-0">
+                @*<h3 class="modal-title" id="exampleModalLabel">產品詳細資料</h3>*@
+                <button type="button" class="close text-right p-3" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        var cart = [];
+        if (localStorage.getItem("cart")) {
+            cart = JSON.parse(localStorage.getItem("cart"));
+        }
+
+        /*購物車數量*/
+        $('.cartQQ').text(cart.length);
+
+        $('.addCart').click(function () {
+
+            let product = $(this).closest('.card');
+            let newPID = product.find(".PID").val();
+
+            let foundItem = cart.find((item) => item.PID == newPID);
+            if (foundItem === undefined) {
+                setCart(product);
+            }
+            else {
+                foundItem.Amount = (parseInt(foundItem.Amount) + 1).toString();
+                localStorage.setItem("cart", JSON.stringify(cart));
+                alert('商品數量已更新');
+            }
+        });
+
+        function setCart(product) {
+
+            let newItem = {
+                PID: product.find(".PID").val(),
+                PName: product.find(".PName").text(),
+                Price: product.find(".Price").attr("title"),
+                Amount: 1,
+                IMG: product.find(".card-img-top").attr("src")
+
+            }
+
+            cart.push(newItem);
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert('已加入購物車');
+
+            $('.cartQQ').text(cart.length);
+        }
+
+        /*MODAL*/
+        $('.btnDetail').click(function (evt) {
+            //console.log("/Members/Details/" + evt.target.title);
+            $('#exampleModal .modal-body').load("/Products/Details/" + evt.target.title);
+        });
+
+    </script>
+}

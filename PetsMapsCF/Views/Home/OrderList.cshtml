@@ -1,0 +1,137 @@
+﻿
+
+@model IEnumerable<PetsMapsCF.Models.GroupBuyingOrders>
+
+@{
+    ViewBag.Title = "會員中心";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var OrderDate = DateTime.Now.ToShortDateString();
+}
+
+<div class="createform p-3 mt-4">
+    <h3 class="managertitle align-content-center">
+        <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　訂單查詢
+    </h3>
+    <div class="pl-3 pr-3 pb-3 pt-0">
+        <table class="table table-hover table-striped bg-light order-table">
+            <tr>
+                <th style="width:110px;">
+                    訂購日期
+                    @*@Html.DisplayNameFor(model => model.OrderDate)*@
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderID)
+                </th>
+                <th style="width:110px;">
+                    @Html.DisplayNameFor(model => model.ShipDate)
+                </th>
+                <th style="width:110px;">
+                    @Html.DisplayNameFor(model => model.DeliveryDate)
+                </th>
+                <th>
+                    收貨人
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipAddress)
+                </th>
+                <th>
+                    運送/付款方式
+                    @*@Html.DisplayNameFor(model => model.Shipper.ShipVia)*@
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.PayType.PayTypeName)*@
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                <input id="Hidden1" type="hidden" name="OrderDate" value="@OrderDate" />
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Consignee)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.ShipAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shipper.ShipVia)/@Html.DisplayFor(modelItem => item.PayType.PayTypeName)
+        </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.PayType.PayTypeName)*@
+            </td>
+            <td>
+                <button type="button" title="@item.OrderID" class="btn btn-info btn-sm btnDetail" data-toggle="modal" data-target="#exampleModal">
+                    訂購明細
+                </button>
+            @*</td>
+            <td>*@
+            @*<button class="btn btn-primary btn-sm " type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                @Html.DisplayNameFor(model => model.ShipAddress)
+            </button>
+
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                       @Html.DisplayFor(modelItem => item.ShipAddress)
+                    </div>
+                </div>*@
+            </td>
+        </tr>
+}
+       </table>
+    </div>
+</div>
+
+<div class="createform p-3 mt-4">
+    <h3 class="managertitle align-content-center">
+        <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　會員資料
+    </h3>
+    @Html.Action("_MemberDetail", "Home")
+
+
+    <!-- Modal -->
+    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center border-bottom-0">
+                    <h3 class="modaltitle align-content-center modal-title" id="exampleModalLabel">
+                        <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　訂單明細查詢
+                    </h3>
+                    <button type="button" class="close text-right p-3" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section scripts{
+        <script>
+
+            /*MODAL*/
+            $('.btnDetail').click(function (evt) {
+                //console.log("/Members/Details/" + evt.target.title);
+                $('#exampleModal .modal-body').load("/Home/OrderDetail/" + evt.target.title);
+            });
+
+        </script>
+    }

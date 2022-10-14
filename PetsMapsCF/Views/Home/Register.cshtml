@@ -1,0 +1,86 @@
+﻿@model PetsMapsCF.Models.VMMember
+
+@{
+    ViewBag.Title = "註冊會員";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="managertitle align-content-center">
+    <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　註冊會員
+</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container p-5 createform">
+        <div class="form">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        @Html.LabelFor(model => model.MemberAccount, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MemberAccount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MemberAccount, "", new { @class = "text-danger" })
+                        <span class="text-danger">@TempData["AccountNull"]</span>
+                    </div>
+                    <div class="col-4">
+
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-4 mt-2">
+                        @Html.LabelFor(model => model.MemberName, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MemberName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MemberName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-4 mt-2">
+                        @Html.LabelFor(model => model.MemberGender, htmlAttributes: new { @class = "control-label" })
+                        <select name="MemberGender" id="MemberGender" class="form-control col-3">
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-4 mt-2">
+                        @Html.LabelFor(model => model.MemberBirthday, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MemberBirthday, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MemberBirthday, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-4 mt-2">
+                        @Html.LabelFor(model => model.MemberMobile, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MemberMobile, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MemberMobile, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-8 mt-2">
+                        @Html.LabelFor(model => model.MemberAddress, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MemberAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MemberAddress, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-4 mt-2">
+                        @Html.LabelFor(model => model.MemberPassword, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MemberPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MemberPassword, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-4 mt-2">
+                        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group justify-content-center mt-4">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="註冊" class="btn btn-primary" />
+            </div>
+        </div>
+        </div>
+}
+
+@section scripts{
+
+}
