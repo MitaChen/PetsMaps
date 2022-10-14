@@ -1,0 +1,177 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<PetsMapsCF.Models.GroupBuyingOrders>
+@*@model IEnumerable<PetsMapsCF.Models.GroupBuyingOrders>*@
+
+@{
+    ViewBag.Title = "訂單管理";
+    Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+}
+
+<h3 class="managertitle align-content-center">
+    <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　訂單資料列表
+</h3>
+
+<div class="search col-4 mb-2 d-flex mt-5">
+    <form class="d-flex" action="/Orders/OrderList" method="post">
+        <i style="font-size:1.6rem;" class="bi bi-search"></i>
+        <input class="form-control mr-2 ml-3 col-8" type="text" placeholder="輸入訂單編號搜尋" name="ordersid" />
+        <input class="btn btn-light" id="Submit1" type="submit" value="查詢" />
+    </form>
+</div>
+
+<div class="col-3 mb-3 d-flex">
+    <i style="font-size:1.6rem;" class="bi bi-search"></i>
+    <input type="search" class="light-table-filter form-control ml-3" data-table="order-table" placeholder="請輸入關鍵字搜尋">
+</div>
+
+<table class="table table-hover table-striped bg-light order-table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderID)
+        </th>
+        <th>會員帳號</th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().OrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Consignee)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ShipAddress)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ShipDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DeliveryDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.MemberAccount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Consignee)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.ShipAddress)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderID })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.OrderID })*@
+                @Html.ActionLink("編輯", "Edit", new { id = item.OrderID }, new { @class = "btn btn-primary btn-sm" })
+                <button type="button" title="@item.OrderID" class="btn btn-info btn-sm btnDetail" data-toggle="modal" data-target="#exampleModal">
+                    詳細
+                </button>
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<!-- 頁籤 -->
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(Model, page => Url.Action("OrderList", new { page }))
+</div>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header text-center border-bottom-0">
+                <h3 class="modaltitle align-content-center modal-title" id="exampleModalLabel">
+                    <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　訂單明細查詢
+                </h3>
+                @*<h3 class="modal-title" id="exampleModalLabel">訂單詳細資料</h3>*@
+                <button type="button" class="close text-right p-3" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        /*MODAL*/
+        $('.btnDetail').click(function (evt) {
+            //console.log("/Members/Details/" + evt.target.title);
+            $('#exampleModal .modal-body').load("/Orders/Details/" + evt.target.title);
+        });
+
+
+        (function (document) {
+            'use strict';
+
+            // 建立 LightTableFilter
+            var LightTableFilter = (function (Arr) {
+
+                var _input;
+
+                // 資料輸入事件處理函數
+                function _onInputEvent(e) {
+                    _input = e.target;
+                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+                    Arr.forEach.call(tables, function (table) {
+                        Arr.forEach.call(table.tBodies, function (tbody) {
+                            Arr.forEach.call(tbody.rows, _filter);
+                        });
+                    });
+                }
+
+                // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
+                function _filter(row) {
+                    var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+                }
+
+                return {
+                    // 初始化函數
+                    init: function () {
+                        var inputs = document.getElementsByClassName('light-table-filter');
+                        Arr.forEach.call(inputs, function (input) {
+                            input.oninput = _onInputEvent;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            // 網頁載入完成後，啟動 LightTableFilter
+            document.addEventListener('readystatechange', function () {
+                if (document.readyState === 'complete') {
+                    LightTableFilter.init();
+                }
+            });
+
+        })(document);
+
+    </script>
+}

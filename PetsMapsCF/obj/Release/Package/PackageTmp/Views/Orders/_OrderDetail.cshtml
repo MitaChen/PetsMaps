@@ -1,0 +1,52 @@
+﻿@model IEnumerable<PetsMapsCF.Models.OrderDetails>
+
+@{
+    Layout = "";
+    int total = 0;
+    int amount = 0;
+}
+
+<div class="bg-light">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.ProductName)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th class="text-center">
+                小計
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            amount += item.UnitPrice;
+            total += item.UnitPrice * item.Quantity;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
+                <td class="price text-center" title="@(item.UnitPrice)">
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td class="quantity text-center" title="@(item.Quantity)">
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <th class="text-center">
+                    @(item.UnitPrice*item.Quantity)
+                </th>
+            </tr>
+        }
+    </table>
+    <hr />
+    <h5 class="text-right pr-3 pb-4">
+        <strong>
+            總件數 <i class="bi bi-bag-heart"></i> @amount　總金額 <i class="bi bi-cart-check"></i> NT$@total
+        </strong>
+    </h5>
+</div>

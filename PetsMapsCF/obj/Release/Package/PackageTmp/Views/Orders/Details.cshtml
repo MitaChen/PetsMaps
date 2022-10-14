@@ -1,0 +1,34 @@
+﻿@model IEnumerable<PetsMapsCF.Models.GroupBuyingOrders>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "";
+}
+
+@*<h3 class="managertitle align-content-center">
+    <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　訂單明細查詢
+</h3>*@
+<div style="background-color:#c6c2bbbf">
+    @foreach (var item in Model)
+    {
+        <h4 class="pt-4"><i class="bi bi-card-checklist ml-4 mr-2"></i><strong>@Html.DisplayFor(modelItem => item.OrderID)</strong></h4>
+        <div class="p-3 ml-3" style="font-family:'微軟正黑體'">
+            <h6>@Html.DisplayNameFor(model => model.OrderDate)：@Html.DisplayFor(modelItem => item.OrderDate)</h6>
+            <h6>@Html.DisplayNameFor(model => model.Member.MemberAccount)：@Html.DisplayFor(modelItem => item.Member.MemberAccount)</h6>
+            <h6>@Html.DisplayNameFor(model => model.Consignee)：@Html.DisplayFor(modelItem => item.Consignee)</h6>
+            <h6>@Html.DisplayNameFor(model => model.ShipAddress)：@Html.DisplayFor(modelItem => item.ShipAddress)</h6>
+            <h6>@Html.DisplayNameFor(model => model.PayType.PayTypeName)：@Html.DisplayFor(modelItem => item.PayType.PayTypeName)</h6>
+            <h6>@Html.DisplayNameFor(model => model.Shipper.ShipVia)：@Html.DisplayFor(modelItem => item.Shipper.ShipVia)</h6>
+            <h6>@Html.DisplayNameFor(model => model.ShipDate)：@Html.DisplayFor(modelItem => item.ShipDate)</h6>
+            <h6>@Html.DisplayNameFor(model => model.DeliveryDate)：@Html.DisplayFor(modelItem => item.DeliveryDate)</h6>
+        </div>
+
+
+        @*@Html.ActionLink("Edit", "Edit", new { id = item.OrderID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.OrderID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.OrderID })*@
+
+    }
+</div>
+
+@Html.Action("_OrderDetail", "Orders")

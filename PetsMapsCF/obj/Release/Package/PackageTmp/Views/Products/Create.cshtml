@@ -1,0 +1,55 @@
+﻿@model PetsMapsCF.Models.Products
+
+@{
+    ViewBag.Title = "建立產品資料";
+    Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+}
+
+<h3 class="managertitle align-content-center">
+    <img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　建立產品資料
+</h3>
+
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="container p-5 createform">
+    <div class="form">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-4">
+                    @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+                </div>
+                <div class="w-100"></div>
+                <div class="col-4 mt-2">
+                    @Html.LabelFor(model => model.ProductImg, htmlAttributes: new { @class = "control-label" })
+                    <input id="photo" type="file" class="form-control" name="photo" />
+                    @Html.ValidationMessageFor(model => model.ProductImg, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-4 mt-2">
+                </div>
+                <div class="w-100"></div>
+                <div class="col-8 form-group justify-content-center mt-3">
+                    <input type="submit" value="新增" class="btn btn-primary" />
+                    @Html.ActionLink("返回產品資料列表", "Index", new { }, new { @class = "btn btn-primary" })
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        }
+
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

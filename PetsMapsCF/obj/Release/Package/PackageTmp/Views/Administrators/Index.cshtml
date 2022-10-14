@@ -1,0 +1,83 @@
+﻿@model IEnumerable<PetsMapsCF.Models.Administrators>
+
+@{
+    ViewBag.Title = "管理員管理";
+    Layout = "~/Views/Shared/_Layout_Manager.cshtml";
+}
+
+
+<h3 class="managertitle align-content-center"><img src="~/Photos/cheese.png" style="width:2.5vw;height:2.5vw">　管理員列表 </h3>
+<p class="text-right">
+    @Html.ActionLink("新增資料", "Create", new { depId = ViewBag.deptID }, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-hover table-striped bg-light ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AdminID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdminName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdminPermission)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdminID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdminName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdminPermission)
+            </td>
+            <td>
+                @*<button type="button" title="@item.AdminID" class="btn btn-info btn-sm btnDetail" data-toggle="modal" data-target="#exampleModal">
+            編輯
+        </button>*@
+                @Html.ActionLink("編輯", "Edit", new { id = item.AdminID }, new { @class = "btn btn-primary btn-sm" })
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.AdminID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.AdminID }) |*@
+                @Html.ActionLink("刪除", "Delete", new { id = item.AdminID }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('確定要刪除嗎?')" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-center border-bottom-0">
+                <h3 class="modal-title" id="exampleModalLabel"></h3>
+                <button type="button" class="close text-right p-3" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<script>
+
+        /*MODAL*/
+        $('.btnDetail').click(function (evt) {
+            //console.log("/Members/Details/" + evt.target.title);
+            $('#exampleModal .modal-body').load("/Administrators/Edit/" + evt.target.title);
+        });
+
+    </script>

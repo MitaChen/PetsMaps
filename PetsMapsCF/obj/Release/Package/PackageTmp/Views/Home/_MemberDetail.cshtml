@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PetsMapsCF.Models.Members>
+
+
+
+@{
+    Layout = "";
+
+}
+
+<div class="container pb-4" style="font-family:'微軟正黑體'">
+
+    @foreach (var item in Model)
+    {
+        <div class="p-2 pl-3 pt-3 text-left " style="background-color: #eeebea; ">
+            <h6>
+                會員帳號：　　　@(item.MemberAccount)
+            </h6>
+        </div>
+        <div class="p-2 pl-3 pt-3 text-left " style="background-color: #ffffff; ">
+            <h6>  @Html.DisplayNameFor(model => model.MemberName)：　　　@(item.MemberName) (@(item.MemberGender))</h6>
+        </div>
+        <div class="p-2 pl-3 pt-3 text-left " style="background-color: #eeebea; ">
+            <input id="Hidden1" type="hidden" name="CreateDate" value="@(item.MemberBirthday)" />
+            <h6>
+                @Html.DisplayNameFor(model => model.MemberBirthday)：　　　　　@Html.DisplayFor(modelItem => item.MemberBirthday)
+            </h6>
+        </div>
+        <div class="p-2 pl-3 pt-3 text-left " style="background-color: #ffffff;">
+            <h6>  @Html.DisplayNameFor(model => model.MemberMobile)：　　　　　@(item.MemberMobile) </h6>
+        </div>
+        <div class="p-2 pl-3 pt-3 text-left " style="background-color: #eeebea; ">
+            <h6>  @Html.DisplayNameFor(model => model.MemberAddress)：　　　　　@(item.MemberAddress) </h6>
+        </div>
+        @*<div class="p-2 pl-3 pt-3 text-left " style="background-color: #ffffff;"></div>*@
+    }
+</div>
+
+@*@foreach (var item in Model)
+    {
+        <h6>  會員帳號：　　　@(item.MemberAccount) </h6>
+        <h6>  @Html.DisplayNameFor(model => model.MemberName)：　　　@(item.MemberName) (@(item.MemberGender))</h6>
+        <h6>  @Html.DisplayNameFor(model => model.MemberBirthday)：　　　　　@(item.MemberBirthday)</h6>
+        <h6>  @Html.DisplayNameFor(model => model.MemberMobile)：　　　　　@(item.MemberMobile) </h6>
+        <h6>  @Html.DisplayNameFor(model => model.MemberAddress)：　　　　　@(item.MemberAddress) </h6>
+    }*@
+
+@*<h6> <strong> @Html.DisplayNameFor(model => model.MemberAccount)： @(item.MemberAccount) </strong></h6>
+    <h6> <strong> @Html.DisplayNameFor(model => model.MemberName)：@(item.MemberName) (@(item.MemberGender)) </strong></h6>
+    <h6> <strong> @Html.DisplayNameFor(model => model.MemberBirthday)：@(item.MemberBirthday) </strong></h6>
+    <h6> <strong> @Html.DisplayNameFor(model => model.MemberMobile)：@(item.MemberMobile) </strong></h6>
+    <h6> <strong> @Html.DisplayNameFor(model => model.MemberAddress)：@(item.MemberAddress) </strong></h6>*@
