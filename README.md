@@ -47,8 +47,19 @@
 
 ![image](https://user-images.githubusercontent.com/114054051/196021836-fc02cf94-171f-44f4-90d9-744993e0e3cd.png)
 ![image](https://user-images.githubusercontent.com/114054051/196021853-cc25b43d-0fe2-4c5b-a390-159f323209da.png)
-> 在會員中心可以看到訂單明細以及會員資料
+> 在會員中心可以看到訂單明細以及會員資料，訂單明細會儲存在資料庫，並可從前端後端都能查詢訂單。
 
 <br><br>
 
 ## 後台功能
+![image](https://user-images.githubusercontent.com/114054051/196022767-200bcb50-3472-4842-9f35-67b20ca88e88.png)
+> 管理員登入頁面
+
+![image](https://user-images.githubusercontent.com/114054051/196022816-99d929d9-19f5-4ed4-92f2-50ee232f2332.png)
+> 登入以後右上方的登入按鈕會改成登入中/登出的按鈕
+
+![image](https://user-images.githubusercontent.com/114054051/196022859-aa060a80-9af5-4d01-afad-d23bd4991044.png)
+> 地圖管理，所有寵物餐廳的資源都是在這裡新增跟刪除，再傳送到資料庫。
+
+
+
